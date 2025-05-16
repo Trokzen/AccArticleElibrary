@@ -1,0 +1,40 @@
+{% if session.get('user_id') %}
+    <p>Вы вошли как {{ session.get('login') }} | <a href="{{ url_for('logout') }}">Выйти</a></p>
+{% else %}
+    <p><a href="{{ url_for('login') }}">Войти</a> | <a href="{{ url_for('register') }}">Регистрация</a></p>
+{% endif %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Публикация</title>
+</head>
+<body>
+    <h1>{{ article[1] }}</h1>
+	<p>Входит в РИНЦ: {% if article[2] %}Да{% else %}Нет{% endif %}</p>
+    <h2>Авторы</h2>
+    {% if session.get('user_id') %}
+    <form method="post">
+        <ul>
+        {% for author in authors %}
+            <li>
+                {{ author[1] }} —
+                Вклад: <input type="number" name="contribution_{{ author[0] }}" value="{{ author[2] }}" min="0" max="100" step="0.1">
+                Подано на премию: <input type="checkbox" name="applied_for_award_{{ author[0] }}" {% if author[3] %}checked{% endif %}>
+            </li>
+        {% endfor %}
+        </ul>
+        <button type="submit">Сохранить все изменения</button>
+    </form>
+    {% else %}
+    <ul>
+    {% for author in authors %}
+        <li>
+            {{ author[1] }} — Вклад: {{ author[2] }} — Подано на премию: {% if author[3] %}Да{% else %}Нет{% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    <a href="{{ url_for('index') }}">Назад к списку</a>
+</body>
+</html>
