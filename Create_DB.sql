@@ -31,5 +31,26 @@ CREATE TABLE IF NOT EXISTS elibrary.users (
     role TEXT DEFAULT 'user'         -- Роль пользователя (например, 'admin', 'user')
 );
 
+-- Таблица подразделений
+CREATE TABLE IF NOT EXISTS elibrary.departments (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL UNIQUE
+);
+
+-- Таблица сотрудников
+CREATE TABLE IF NOT EXISTS elibrary.employees (
+    id SERIAL PRIMARY KEY,
+    FIO TEXT NOT NULL
+);
+
+-- Связующая таблица "сотрудник-подразделение" (многие ко многим)
+CREATE TABLE IF NOT EXISTS elibrary.employee_departments (
+    employee_id INTEGER NOT NULL,
+    department_id INTEGER NOT NULL,
+    PRIMARY KEY (employee_id, department_id),
+    FOREIGN KEY (employee_id) REFERENCES elibrary.employees(id) ON DELETE CASCADE,
+    FOREIGN KEY (department_id) REFERENCES elibrary.departments(id) ON DELETE CASCADE
+);
+
 -- Индекс для ускорения поиска по логину
 CREATE INDEX IF NOT EXISTS idx_users_login ON elibrary.users(login);
