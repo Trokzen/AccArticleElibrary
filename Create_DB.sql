@@ -52,5 +52,14 @@ CREATE TABLE IF NOT EXISTS elibrary.employee_departments (
     FOREIGN KEY (department_id) REFERENCES elibrary.departments(id) ON DELETE CASCADE
 );
 
+-- Связующая таблица "сотрудник-статья" (многие ко многим)
+CREATE TABLE IF NOT EXISTS elibrary.employee_articles (
+    employee_id INTEGER NOT NULL,
+    article_id INTEGER NOT NULL,
+    PRIMARY KEY (employee_id, article_id),
+    FOREIGN KEY (employee_id) REFERENCES elibrary.employees(id) ON DELETE CASCADE,
+    FOREIGN KEY (article_id) REFERENCES elibrary.articles(id) ON DELETE CASCADE
+);
+
 -- Индекс для ускорения поиска по логину
 CREATE INDEX IF NOT EXISTS idx_users_login ON elibrary.users(login);
