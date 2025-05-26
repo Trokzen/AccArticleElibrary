@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head><title>Список подразделений</title></head>
+<body>
+    <h1>Список подразделений</h1>
+    <ul>
+    {% for id, name in departments %}
+        <li>
+            <a href="{{ url_for('department_employees', department_id=id) }}">{{ name }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+    <a href="{{ url_for('index') }}">На главную</a>
+</body>
+</html>
