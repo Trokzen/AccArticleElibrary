@@ -8,6 +8,7 @@ SET search_path TO elibrary;
 CREATE TABLE IF NOT EXISTS elibrary.articles (
     id INTEGER PRIMARY KEY,          -- Уникальный идентификатор статьи
     title TEXT NOT NULL,             -- Название статьи
+    year_pub INTEGER NOT NULL,           -- Год публикации
     in_rinc BOOLEAN NOT NULL         -- Включена ли статья в РИНЦ ("Да"/"Нет")
 );
 
