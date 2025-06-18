@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Привязка статей к сотруднику</title>
+    <script>
+        function toggleCheckboxes(checked) {
+            const checkboxes = document.querySelectorAll('input[name="articles"]');
+            checkboxes.forEach(cb => cb.checked = checked);
+        }
+    </script>
+</head>
+<body>
+    <h1>Привязка статей для {{ fio }}</h1>
+    <button type="button" onclick="toggleCheckboxes(true)">Выделить все</button>
+    <button type="button" onclick="toggleCheckboxes(false)">Снять все</button>
+    <form method="post">
+        {% for id, title in articles %}
+            <input type="checkbox" name="articles" value="{{ id }}" {% if id in linked %}checked{% endif %}>
+            {{ loop.index }}. {{ id }} — {{ title }}<br>
+        {% endfor %}
+        <button type="submit">Сохранить</button>
+    </form>
+    <a href="{{ url_for('index') }}">На главную</a>
+</body>
+</html>

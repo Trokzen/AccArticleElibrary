@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head><title>Добавить сотрудника</title></head>
+<body>
+    <h1>Добавить сотрудника</h1>
+    <form method="post">
+        ФИО: <input type="text" name="fio" required><br>
+        Подразделения:<br>
+        {% for dep in departments %}
+            <input type="checkbox" name="departments" value="{{ dep[0] }}"> {{ dep[1] }}<br>
+        {% endfor %}
+        <button type="submit">Добавить</button>
+    </form>
+    <a href="{{ url_for('index') }}">На главную</a>
+</body>
+</html>
