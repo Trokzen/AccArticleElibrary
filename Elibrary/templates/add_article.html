@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Добавить статью</title>
+</head>
+<body>
+    <h1>Добавить статью</h1>
+    <form method="post">
+        <label>ID статьи:</label><br>
+        <input type="number" name="article_id" required><br>
+        <label>Название:</label><br>
+        <input type="text" name="title" required><br>
+        <label>Год публикации:</label><br>
+        <input type="number" name="year_pub" min="1900" max="2100" required><br>
+        <label>Входит в РИНЦ:</label>
+        <input type="checkbox" name="in_rinc"><br>
+        <label>Авторы (через запятую, формат: Фамилия И.О.):</label><br>
+        <input type="text" name="authors" required><br><br>
+        <button type="submit">Добавить</button>
+    </form>
+    <a href="{{ url_for('index') }}">На главную</a>
+</body>
+</html>

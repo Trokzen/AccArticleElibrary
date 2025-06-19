@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Привязка статей к сотруднику</title>
+    <script>
+        function toggleCheckboxes(className, checked) {
+            const checkboxes = document.querySelectorAll('input.' + className);
+            checkboxes.forEach(cb => cb.checked = checked);
+        }
+    </script>
+</head>
+<body>
+    <h1>Привязка статей для {{ fio }}</h1>
+    <form method="post">
+        <h2>Привязанные статьи</h2>
+        <button type="button" onclick="toggleCheckboxes('linked', true)">Выделить все</button>
+        <button type="button" onclick="toggleCheckboxes('linked', false)">Снять все</button>
+        <br><br>
+        {% for id, title in linked_articles %}
+            <input type="checkbox" class="linked" name="articles" value="{{ id }}" checked>
+            {{ loop.index }}. {{ id }} — 
+            <a href="{{ url_for('article_detail', article_id=id) }}" target="_blank">{{ title }}</a><br>
+        {% else %}
+            <p>Нет привязанных статей.</p>
+        {% endfor %}
+
+        <h2>Возможные статьи для привязки</h2>
+        <button type="button" onclick="toggleCheckboxes('candidate', true)">Выделить все</button>
+        <button type="button" onclick="toggleCheckboxes('candidate', false)">Снять все</button>
+        {% for id, title in candidate_articles %}
+            <input type="checkbox" class="candidate" name="articles" value="{{ id }}">
+            {{ loop.index }}. {{ id }} — 
+            <a href="{{ url_for('article_detail', article_id=id) }}" target="_blank">{{ title }}</a><br>
+        {% else %}
+            <p>Нет подходящих статей.</p>
+        {% endfor %}
+
+        <button type="submit">Сохранить</button>
+    </form>
+
+    <h2>Ручная привязка статьи по ID</h2>
+    <form method="post" action="{{ url_for('manual_link', employee_id=employee_id) }}">
+        <label>Введите ID статьи:</label>
+        <input type="number" name="manual_article_id" required>
+        <button type="submit">Привязать</button>
+    </form>
+
+    <a href="{{ url_for('index') }}">На главную</a>
+</body>
+</html>
